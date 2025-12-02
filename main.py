@@ -1,4 +1,5 @@
-MASTER_PASSWORD = "1234"  # Le mot de passe maitre
+import time
+MASTER_PASSWORD = "1234"  # Le mot de passe maître
 
 # Liste de mots de passe
 passwords = {
@@ -10,8 +11,10 @@ passwords = {
 print("Bienvenue")
 print("Veuillez entrer le code pour votre gestionnaire de mots de passe :")
 
+tentatives = 0  # Compteur d'essais ratés
+
 while True:
-    entree = input() 
+    entree = input()  # L'utilisateur tape le mot de passe
 
     if entree == MASTER_PASSWORD:
         print("Oui, c'est le bon mot de passe.\n")
@@ -19,5 +22,15 @@ while True:
         for site, mdp in passwords.items():
             print(f"{site} : {mdp}")
         break
+
     else:
-        print("Mot de passe incorrect. Veuillez ressayer :")
+        tentatives += 1
+        print("Mot de passe incorrect. Veuillez réessayer :")
+
+        # Si 3 tentatives ratées → pause 10 secondes
+        if tentatives == 3:
+            print("\nTrop de tentatives. Blocage pendant 10 secondes...\n")
+            time.sleep(10)
+            tentatives = 0  # On remet à zéro après le blocage
+            print("Vous pouvez réessayer :")
+
